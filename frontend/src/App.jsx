@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     async function fetchAuth() {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/check-auth`, {
+        const res = await fetch("http://localhost:5000/check-auth", {
           credentials: "include",
         });
         const data = await res.json();

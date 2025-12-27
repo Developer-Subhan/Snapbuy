@@ -18,6 +18,10 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import CartDrawer from "./CartDrawer.jsx";
 
+const navigation = {
+  categories: [],
+};
+
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [user, setUser] = useState(null);
@@ -28,7 +32,7 @@ export default function Navbar() {
   useEffect(() => {
     async function fetchAuth() {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/check-auth`, {
+        const res = await fetch("http://localhost:5000/check-auth", {
           credentials: "include",
         });
         if (res.ok) {
@@ -58,7 +62,7 @@ export default function Navbar() {
   if (loggedIn === null) return <div className="h-24 bg-white border-b animate-pulse" />;
 
   return (
-    <div className="bg-white sticky top-0 z-[100] border-b border-indigo-100 shadow-sm shadow-indigo-100/20">
+    <div className="bg-white sticky top-0 z-[100] border-b border-indigo-50 shadow-sm shadow-indigo-100/20">
       <Dialog open={open} onClose={setOpen} className="relative z-[110] lg:hidden">
         <DialogBackdrop transition className="fixed inset-0 bg-indigo-900/20 backdrop-blur-sm transition-opacity duration-300" />
         <div className="fixed inset-0 z-40 flex">
@@ -169,8 +173,7 @@ export default function Navbar() {
                     
                     <button
                       onClick={async () => {
-                        await fetch(`${import.meta.env.VITE_API_URL}/logout", { credentials: "include` });
-                        localStorage.removeItem("cart"); // Clears local storage on logout
+                        await fetch("http://localhost:5000/logout", { credentials: "include" });
                         window.location.href = "/";
                       }}
                       className="group flex items-center gap-2 px-3 py-2 rounded-xl text-indigo-300 hover:text-red-500 hover:bg-red-50 transition-all duration-300"
@@ -183,6 +186,7 @@ export default function Navbar() {
                 )}
               </div>
             </div>
+
           </div>
         </nav>
       </header>
