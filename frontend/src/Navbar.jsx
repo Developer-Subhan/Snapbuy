@@ -103,9 +103,10 @@ export default function Navbar() {
                 </button>
 
                 <Link to="/" className="ml-2 lg:ml-0 transition-transform active:scale-95">
+                  {/* FIXED: Logo path for Vercel (Ensure photo.png is in /public folder) */}
                   <img 
                     alt="Logo" 
-                    src="/src/assets/photo.png" 
+                    src="/photo.png" 
                     className="h-16 w-auto object-contain sm:h-24 sm:scale-110" 
                   />
                 </Link>
@@ -173,7 +174,8 @@ export default function Navbar() {
                     
                     <button
                       onClick={async () => {
-                        await fetch(`${import.meta.env.VITE_API_URL}/logout", { credentials: "include` });
+                        // FIXED: Corrected logout fetch syntax
+                        await fetch(`${import.meta.env.VITE_API_URL}/logout`, { credentials: "include" });
                         window.location.href = "/";
                       }}
                       className="group flex items-center gap-2 px-3 py-2 rounded-xl text-indigo-300 hover:text-red-500 hover:bg-red-50 transition-all duration-300"
