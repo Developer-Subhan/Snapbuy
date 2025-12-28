@@ -20,13 +20,8 @@ module.exports.getAllProducts = async (req, res, next) => {
 
     const products = await Product.find(filter);
 
-    if (!products || products.length === 0) {
-        const error = new Error(`No products found matching "${search}"`);
-        error.status = 404;
-        throw error; 
-    }
 
-    res.json(products);
+res.status(200).json(products);
 
   } catch (err) {
     next(err); 
