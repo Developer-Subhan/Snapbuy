@@ -110,7 +110,7 @@ export default function OrderStatusTracker() {
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-xs font-bold text-slate-400 uppercase ml-1">Verify Email</label>
+                                <label className="text-xs font-bold text-slate-400 uppercase ml-1">Verify Email(optional)</label>
                                 <input
                                     type="email"
                                     placeholder="your@email.com"
@@ -118,7 +118,7 @@ export default function OrderStatusTracker() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-4 focus:ring-blue-50 outline-none"
                                 />
-                            </div>
+                            </div>  
                         </div>
                         <button
                             type="submit"
