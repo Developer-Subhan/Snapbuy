@@ -6,7 +6,7 @@ const passport = require("passport");
 const helmet = require("helmet");
 const User = require("./models/User");
 const LocalStrategy = require("passport-local");
-const { isLoggedIn, isAdmin } = require("./middleware");
+const MongoStore = require("connect-mongo");
 
 const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/order");
@@ -42,6 +42,20 @@ app.use(async (req, res, next) => {
   next();
 });
 
+
+
+const store = MongoStore.create({
+  mongoUrl: process.env.DB_URL,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24*3600,
+});
+
+store.on("error", (e)=>{
+console.log("Error in mongo store",e);
+})
+
 app.use(cors({
   origin: process.env.FRONTEND_URL || "https://snapbuy-7662.vercel.app",
   credentials: true
@@ -55,6 +69,7 @@ app.use(helmet({
 app.set("trust proxy", 1); 
 
 const sessionOption = {
+  store,
   secret: process.env.SESSION_SECRET || "fallbacksecret",
   resave: false,
   saveUninitialized: false,
