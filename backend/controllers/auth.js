@@ -20,6 +20,12 @@ module.exports.register = async (req, res, next) => {
       });
     });
   } catch (err) {
+    if (err.name === "UserExistsError" || err.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: "A user with that username or email already exists.",
+      });
+    }
     next(err);
   }
 };
