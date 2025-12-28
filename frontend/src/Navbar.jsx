@@ -103,10 +103,9 @@ export default function Navbar() {
                 </button>
 
                 <Link to="/" className="ml-2 lg:ml-0 transition-transform active:scale-95">
-                  {/* FIXED: Logo path for Vercel (Ensure photo.png is in /public folder) */}
                   <img 
                     alt="Logo" 
-                    src="/photo.png" 
+                    src="./assets/photo.png" 
                     className="h-16 w-auto object-contain sm:h-24 sm:scale-110" 
                   />
                 </Link>
