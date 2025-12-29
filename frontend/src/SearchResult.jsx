@@ -13,7 +13,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Loader from "./Loader";
 
-export default function SearchResults() {
+export default function SearchResult() {
   const [searchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
