@@ -74,29 +74,32 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { setError } = useError();
+  const [searchParams] = useSearchParams();
 
   const fetchProducts = useCallback(async (isRetry = false) => {
     if (!isRetry) setLoading(true);
-    
+
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
+      const q = searchParams.get('q') || '';
+      const url = q ? `${import.meta.env.VITE_API_URL}/products?q=${encodeURIComponent(q)}` : `${import.meta.env.VITE_API_URL}/products`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`Server status: ${res.status}`);
-      
+
       const data = await res.json();
       setProducts(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Fetch failed:", err);
-      
+
       if (!isRetry) {
-          setError({ 
-            message: err.message || "An unexpected error occurred", 
-            status: "Offline" 
+          setError({
+            message: err.message || "An unexpected error occurred",
+            status: "Offline"
           });
       }
     } finally {
       setLoading(false);
     }
-  }, [setError]);
+  }, [setError, searchParams]);
 
   useEffect(() => {
     fetchProducts();
