@@ -110,11 +110,17 @@ export default function ProductList() {
   return (
     <div className="min-h-screen bg-slate-50/30">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {products.map((item) => (
-            <GridItem key={item._id || Math.random()} item={item} />
-          ))}
-        </div>
+        {products.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-slate-500 text-lg">No products found</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {products.map((item) => (
+              <GridItem key={item._id || Math.random()} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
