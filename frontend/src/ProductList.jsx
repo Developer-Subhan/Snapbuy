@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Heart, Eye, AlertCircle, RefreshCcw } from "lucide-react";
 import Loader from "./Loader";
 import { useError } from "./ErrorContext";
