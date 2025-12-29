@@ -27,6 +27,7 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
