@@ -64,6 +64,7 @@ app.use(cors({
 // Block all requests without whitelist origin
 app.use((req, res, next) => {
   const origin = req.headers.origin;
+  console.log("Request origin:", origin);
   if (!origin || !whitelist.includes(origin)) {
     return res.status(403).json({ message: "Access denied" });
   }
