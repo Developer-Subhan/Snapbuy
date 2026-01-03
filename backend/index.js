@@ -37,20 +37,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-const fourteenDaysInSeconds = 14 * 24 * 60 * 60;
-
-const store = MongoStore.create({
-  mongoUrl: process.env.DB_URL,
-  crypto: { secret: process.env.SESSION_SECRET || "fallbacksecret" },
-  touchAfter: 24 * 3600,
-  ttl: fourteenDaysInSeconds
-});
-
-store.on("error", (e) => console.log("Error in mongo store", e));
-
 const whitelist = [
   "https://snapbuy-main.vercel.app",
-  "https://snapbuy-main.vercel.app/",
   "http://localhost:5173"
 ];
 
@@ -59,7 +47,8 @@ app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     return next();
   }
-  if (!origin || !whitelist.includes(origin)) {
+  const isWhitelisted = origin && whitelist.some(url => origin.startsWith(url));
+  if (origin && !isWhitelisted) {
     return res.status(403).json({ message: "Access denied" });
   }
   next();
@@ -67,7 +56,8 @@ app.use((req, res, next) => {
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || whitelist.includes(origin)) {
+    const isWhitelisted = !origin || whitelist.some(url => origin.startsWith(url));
+    if (isWhitelisted) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -76,13 +66,19 @@ app.use(cors({
   credentials: true
 }));
 
-
-
-
 app.use(express.json());
 app.use(helmet({ contentSecurityPolicy: false }));
 
 app.set("trust proxy", 1);
+
+const fourteenDaysInSeconds = 14 * 24 * 60 * 60;
+
+const store = MongoStore.create({
+  mongoUrl: process.env.DB_URL,
+  crypto: { secret: process.env.SESSION_SECRET || "fallbacksecret" },
+  touchAfter: 24 * 3600,
+  ttl: fourteenDaysInSeconds
+});
 
 const sessionOption = {
   store,
@@ -125,7 +121,6 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Something went wrong!';
-  console.log(err);
   res.status(statusCode).json({ message, error: err.name });
 });
 
