@@ -37,8 +37,19 @@ app.use(async (req, res, next) => {
   next();
 });
 
+const whitelist = ["https://snapbuy-main.vercel.app", "http://localhost:5173"];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (req.method === "OPTIONS") return next();
+  if (!origin || !whitelist.includes(origin)) {
+    return res.status(403).json({ message: "Access Denied: Unauthorized Request Source" });
+  }
+  next();
+});
+
 app.use(cors({
-  origin: ["https://snapbuy-main.vercel.app", "http://localhost:5173"],
+  origin: whitelist,
   credentials: true
 }));
 
