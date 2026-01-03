@@ -37,32 +37,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-const whitelist = [
-  "https://snapbuy-main.vercel.app",
-  "http://localhost:5173"
-];
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (req.method === "OPTIONS") {
-    return next();
-  }
-  const isWhitelisted = origin && whitelist.some(url => origin.startsWith(url));
-  if (origin && !isWhitelisted) {
-    return res.status(403).json({ message: "Access denied" });
-  }
-  next();
-});
-
 app.use(cors({
-  origin: function (origin, callback) {
-    const isWhitelisted = !origin || whitelist.some(url => origin.startsWith(url));
-    if (isWhitelisted) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: ["https://snapbuy-main.vercel.app", "http://localhost:5173"],
   credentials: true
 }));
 
