@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 
 app.use(cors({
   origin: whitelist,
-  credentials: true
+  credentials: false,
 }));
 
 app.use(express.json());
