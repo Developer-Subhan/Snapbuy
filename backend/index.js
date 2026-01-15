@@ -50,7 +50,7 @@ const whitelist = ["https://snapbuy-main.vercel.app", "http://localhost:5173"];
 
 app.use(cors({
   origin: whitelist,
-  credentials: false,
+  credentials: true,
 }));
 
 app.use(express.json());
@@ -72,11 +72,12 @@ const sessionOption = {
   secret: process.env.SESSION_SECRET || "fallbacksecret",
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     maxAge: fourteenDaysInSeconds * 1000,
     httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
   }
 };
 
