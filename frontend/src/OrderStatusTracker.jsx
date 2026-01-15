@@ -41,7 +41,7 @@ export default function OrderStatusTracker() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/orders/status/${cleanOrderId}`,
+        `${import.meta.env.VITE_API_URL}/api/orders/order-status/${cleanOrderId}`,
         {
           signal: controller.signal,
         }
