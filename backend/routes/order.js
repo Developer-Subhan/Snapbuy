@@ -9,7 +9,7 @@ router.route('/')
 
 router.put('/:id/status', isLoggedIn, isAdmin, orderController.updateOrderStatus);
 
-router.get('/api/order-status/:id', orderController.getOrderStatus);
+router.get('/order-status/:id', orderController.getOrderStatus);
 
 module.exports = router;
 
