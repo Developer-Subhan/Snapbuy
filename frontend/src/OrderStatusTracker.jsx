@@ -29,7 +29,7 @@ export default function OrderStatusTracker() {
 
     try {
       const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
-      const response = await fetch(`${baseUrl}/api/orders/order-status/${cleanOrderId}`, {
+      const response = await fetch(`${baseUrl}/orders/order-status/${cleanOrderId}`, {
         signal: controller.signal,
       });
 
